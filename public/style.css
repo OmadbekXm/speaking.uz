@@ -1,0 +1,264 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --ink: #16213a;
+  --muted: #5b677a;
+  --bg: #eef2f4;
+  --surface: #ffffff;
+  --line: #dde3e9;
+  --accent: #2b6f63;
+  --record: #c4432e;
+  --record-soft: #fbeae6;
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --radius-sm: 10px;
+  --shadow: 0 1px 2px rgba(22, 33, 58, 0.04), 0 10px 26px rgba(22, 33, 58, 0.07);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+.screen { display: none; min-height: 100vh; }
+.screen.active { display: block; }
+
+.container {
+  width: 92%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 56px 0 64px;
+}
+
+h1 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 600;
+  font-size: 44px;
+  letter-spacing: -0.01em;
+  text-align: center;
+  margin: 0 0 8px;
+}
+
+h2 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 600;
+  font-size: 26px;
+  letter-spacing: -0.01em;
+  margin: 0 0 28px;
+}
+
+.subtitle {
+  text-align: center;
+  color: var(--muted);
+  font-size: 16px;
+  margin: 0 0 48px;
+}
+
+/* Part selector — a real 4-step sequence, so a number is earned, not decorative */
+.parts {
+  counter-reset: part;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.parts button {
+  counter-increment: part;
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 26px 24px 24px 64px;
+  background: var(--surface);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color .15s ease, transform .15s ease;
+}
+
+.parts button::before {
+  content: counter(part);
+  position: absolute;
+  left: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Fraunces', serif;
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.parts button:hover { border-color: var(--accent); transform: translateY(-1px); }
+.parts button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Topics — a clean list rather than another wall of shadow cards */
+.topics {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 40px;
+  border-top: 1px solid var(--line);
+}
+
+.topics button {
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 16px;
+  text-align: left;
+  padding: 18px 6px;
+  cursor: pointer;
+  transition: color .15s ease, padding-left .15s ease;
+}
+
+.topics button:hover,
+.topics button:focus-visible {
+  color: var(--accent);
+  padding-left: 14px;
+  outline: none;
+}
+
+.back {
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 15px;
+  cursor: pointer;
+  margin-bottom: 28px;
+  padding: 4px 0;
+}
+.back:hover { color: var(--ink); }
+
+.practice { max-width: 760px; text-align: center; margin: 0 auto; }
+
+/* Question — styled like a cue card, not a generic shadow panel */
+.question {
+  background: var(--surface);
+  border-left: 4px solid var(--accent);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  padding: 32px 34px;
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 23px;
+  line-height: 1.55;
+  text-align: left;
+  box-shadow: var(--shadow);
+}
+
+#timer {
+  font-size: 44px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  margin: 28px 0;
+  color: var(--ink);
+}
+/* Optional: add class "warning" via JS in the last seconds */
+#timer.warning { color: var(--record); }
+
+.buttons { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+
+.buttons button {
+  border: 0;
+  padding: 14px 26px;
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity .15s ease, transform .1s ease;
+}
+.buttons button:active { transform: scale(.98); }
+
+#speakBtn { background: var(--ink); color: #fff; }
+/* Optional: toggle class "recording" on #speakBtn while mic is live */
+#speakBtn.recording {
+  background: var(--record);
+  animation: pulse 1.6s ease-in-out infinite;
+}
+#finishBtn { background: var(--line); color: var(--ink); }
+#checkBtn { background: var(--accent); color: #fff; }
+
+.buttons button:disabled { opacity: .4; cursor: not-allowed; }
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(196, 67, 46, .35); }
+  50% { box-shadow: 0 0 0 10px rgba(196, 67, 46, 0); }
+}
+
+audio { display: none; width: 100%; margin-top: 28px; border-radius: var(--radius-sm); }
+
+.loading { display: none; margin-top: 28px; font-weight: 600; color: var(--muted); }
+
+.error {
+  display: none;
+  margin-top: 22px;
+  padding: 16px 18px;
+  border-radius: var(--radius-sm);
+  background: var(--record-soft);
+  color: #7a2a1c;
+  text-align: left;
+  font-size: 15px;
+}
+
+.result {
+  display: none;
+  margin-top: 34px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  text-align: left;
+}
+
+.result h3 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 600;
+  margin: 24px 0 10px;
+}
+.result h2 + h3 { margin-top: 0; }
+
+.result p { line-height: 1.65; color: var(--ink); }
+.result ul { padding-left: 22px; line-height: 1.75; }
+
+.scoreGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin: 22px 0;
+}
+
+.score {
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  text-align: center;
+}
+.score strong {
+  display: block;
+  font-family: 'Fraunces', serif;
+  font-size: 26px;
+  color: var(--accent);
+  margin-top: 6px;
+}
+
+@media (max-width: 650px) {
+  .parts, .topics { grid-template-columns: 1fr; }
+  .parts button { padding-left: 58px; }
+  h1 { font-size: 32px; }
+  .question { font-size: 19px; padding: 26px; }
+  .scoreGrid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}

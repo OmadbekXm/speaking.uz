@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CEFR Speaking AI</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <main id="homeScreen" class="screen active">
+      <div class="container">
+        <h1>CEFR Speaking AI</h1>
+        <p class="subtitle">Uzbekistan Multilevel Speaking Practice</p>
+
+        <div class="parts">
+          <button type="button" onclick="openPart(1)">Part 1.1</button>
+          <button type="button" onclick="openPart(2)">Part 1.2</button>
+          <button type="button" onclick="openPart(3)">Part 2</button>
+          <button type="button" onclick="openPart(4)">Part 3</button>
+        </div>
+      </div>
+    </main>
+
+    <main id="topicsScreen" class="screen">
+      <div class="container">
+        <button type="button" class="back" onclick="goHome()">← Home</button>
+
+        <h2 id="partTitle">Choose a topic</h2>
+
+        <div id="topics" class="topics"></div>
+      </div>
+    </main>
+
+    <main id="practiceScreen" class="screen">
+      <div class="container practice">
+        <button type="button" class="back" onclick="goBackToTopics()">
+          ← Back
+        </button>
+
+        <h2 id="questionTitle">Part 1.1</h2>
+
+        <div id="question" class="question"></div>
+
+        <div id="timer">00:30</div>
+
+        <div class="buttons">
+          <button type="button" id="speakBtn" onclick="startRecording()">
+            🎙 Speak
+          </button>
+
+          <button
+            type="button"
+            id="finishBtn"
+            onclick="finishRecording()"
+            disabled
+          >
+            ⏹ Finish
+          </button>
+
+          <button type="button" id="checkBtn" onclick="checkAnswer()" disabled>
+            🤖 Check
+          </button>
+        </div>
+
+        <audio id="audioPlayer" controls></audio>
+
+        <div id="loading" class="loading">AI is checking your answer...</div>
+
+        <div id="errorBox" class="error"></div>
+
+        <div id="result" class="result"></div>
+      </div>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
